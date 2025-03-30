@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Tricky Concepts Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef1f7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            width: 60%;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .questions-container {
+            width: 100%;
+        }
+
+        .options-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .question {
+            font-size: 18px;
+            margin: 20px 0;
+            display: none;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .question.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .drop-zone {
+            display: inline-block;
+            width: 180px;
+            padding: 10px;
+            border: 2px dashed #aaa;
+            background: #f8f9fa;
+            border-radius: 5px;
+            min-height: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .drop-zone:hover {
+            border-color: #007bff;
+            background: #e9ecef;
+        }
+
+        .draggable {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: grab;
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .draggable:active {
+            cursor: grabbing;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Java Tricky Concepts Quiz</h1>
+        <div class="progress-indicator">Question <span id="question-number">1</span> of 5</div>
+        
+        <div class="questions-container">
+            <div class="question active" id="question1">
+                <p>1. Overloading with Varargs:</p>
+                <pre>
+class VarargsTest {
+    void show(int a, int b) { 
+        System.out.println("Two int parameters"); 
+    }
+    void show(<span class="drop-zone" data-answer="int... a"></span>) { 
+        System.out.println("Varargs method"); 
+    }
+}
+                </pre>
+            </div>
+
+            <div class="question" id="question2">
+                <p>2. Overloading with Wrapper Classes:</p>
+                <pre>
+class Test {
+    void show(int a) { 
+        System.out.println("int method"); 
+    }
+    void show(<span class="drop-zone" data-answer="Integer a"></span>) { 
+        System.out.println("Integer method"); 
+    }
+}
+                </pre>
+            </div>
+
+            <div class="question" id="question3">
+                <p>3. Order of Parameters:</p>
+                <pre>
+class Calculator {
+    int sum(int a, float b) { 
+        return (int) (a + b); 
+    }
+    int sum(float a, <span class="drop-zone" data-answer="double b"></span>) { 
+        return (int) (a + b); 
+    }
+}
+                </pre>
+            </div>
+
+            <div class="question" id="question4">
+                <p>4. Method Overriding:</p>
+                <pre>
+class Parent {
+    void show() {
+        System.out.println("Parent class");
+    }
+}
+class Child extends Parent {
+    void show() {
+        System.out.println("<span class='drop-zone' data-answer='Child class'></span>");
+    }
+}
+                </pre>
+            </div>
+
+            <div class="question" id="question5">
+                <p>5. Autoboxing:</p>
+                <pre>
+class AutoBoxingExample {
+    public static void main(String[] args) {
+        Integer num = <span class="drop-zone" data-answer="Integer: 5"></span>;
+        System.out.println(num);
+    }
+}
+                </pre>
+            </div>
+        </div>
+
+        <div class="options-container" id="options">
+            <div class="draggable" draggable="true" id="opt1">int... a</div>
+            <div class="draggable" draggable="true" id="opt2">Integer a</div>
+            <div class="draggable" draggable="true" id="opt3">double b</div>
+            <div class="draggable" draggable="true" id="opt4">Child class</div>
+            <div class="draggable" draggable="true" id="opt5">Integer: 5</div>
+        </div>
+
+        <div class="controls">
+            <button onclick="prevQuestion()">Previous</button>
+            <button onclick="nextQuestion()">Next</button>
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="resetQuiz()">Reset</button>
+            <button onclick="finishQuiz()">Finish</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        const totalQuestions = 5;
+        function finishQuiz() {
+            window.location.href = 'Part4.html';
+        }
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion++;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                document.getElementById("question-number").innerText = currentQuestion;
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                document.getElementById(`question${currentQuestion}`).classList.remove('active');
+                currentQuestion--;
+                document.getElementById(`question${currentQuestion}`).classList.add('active');
+                document.getElementById("question-number").innerText = currentQuestion;
+            }
+        }
+
+        function checkAnswers() {
+            // Select only the drop zones within the current question
+            document.querySelectorAll(`.question.active .drop-zone`).forEach(zone => {
+                let correctAnswer = zone.getAttribute('data-answer');
+                if (zone.innerText.trim() === correctAnswer) {
+                    zone.style.borderColor = "green";
+                    zone.style.backgroundColor = "#d4edda";
+                } else {
+                    zone.style.borderColor = "red";
+                    zone.style.backgroundColor = "#f8d7da";
+                }
+            });
+        }
+
+        function resetQuiz() {
+            location.reload();
+        }
+
+        document.querySelectorAll('.draggable').forEach(item => {
+            item.addEventListener('dragstart', event => {
+                event.dataTransfer.setData('text', event.target.innerText);
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', event => event.preventDefault());
+            zone.addEventListener('drop', event => {
+                event.preventDefault();
+                zone.innerText = event.dataTransfer.getData('text');
+            });
+        });
+    </script>
+</body>
+</html>

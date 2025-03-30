@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            font-family: monospace;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .check {
+            background-color: #007bff;
+            color: white;
+        }
+        .next {
+            background-color: #28a745;
+            color: white;
+            display: none;
+        }
+        .message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debug the Java Code</h1>
+    <div class="card">
+        <p id="question"></p>
+        <textarea id="codeArea"></textarea>
+        <div class="buttons">
+            <button class="check" onclick="checkAnswer()">Check</button>
+            <button class="next" onclick="nextQuestion()">Next</button>
+        </div>
+        <p id="message" class="message"></p>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Method Signature Must Be the Same\n\nNumber of changes to do : 2",
+                buggyCode: `class Test {\n    void add(int a, int b) { System.out.println(a+b); }\n    int add(double a, double b) {return a+b; }\n\n    public static void main(String[] args) {\n        Test obj = new Test();\n        obj.add(5, 10);\n        obj.add(5.5, 10.5); \n    }\n}`,
+                correctCode: `class Test {\n    void add(int a, int b) { System.out.println(a+b); }\n    void add(double a, double b) { System.out.println(a+b); }\n\n    public static void main(String[] args) {\n        Test obj = new Test();\n        obj.add(5, 10);\n        obj.add(5.5, 10.5); \n    }\n}`
+            },
+            {
+                question: "Overloading Works with Type Promotion\n\nNumber of changes to do : 4",
+                buggyCode: `class ObjectCasting {
+    void show(Object o) { System.out.println("Object method"); }
+    int show(String s) { System.out.println("String method"); return 1; }
+
+    public static void main(String[] args) {
+        ObjectCasting obj = null;
+        obj.show("Hello");
+        obj.show(100.5);
+        obj.show();
+        obj.show(null, "extra");
+    }
+}
+`,
+                correctCode: `class ObjectCasting {
+    void show(Object o) { System.out.println("Object method"); }
+    void show(String s) { System.out.println("String method"); }
+
+    public static void main(String[] args) {
+        ObjectCasting obj = new ObjectCasting();
+        obj.show("Hello");
+        obj.show(100.5);
+        obj.show();
+        obj.show(null);
+    }
+}
+`
+            },
+            {
+                question: "Autoboxing in Overloading\n\nNumber of changes to do : 2",
+                buggyCode: `public class AutoboxingOverloading {
+    static void show(int x) {
+        System.out.println("Primitive int: " + x);
+    }
+
+    static int show(Integer x) {
+        System.out.println("Wrapper Integer: " + x);
+    }
+
+    public static void main(String[] args) {
+        Integer a = 15;       
+        int b = 20;    
+
+        show(A); 
+        show(b); 
+        show(b + a);
+    }
+}
+
+`,
+                correctCode: `public class AutoboxingOverloading {
+    static void show(int x) {
+        System.out.println("Primitive int: " + x);
+    }
+
+    static void show(Integer x) {
+        System.out.println("Wrapper Integer: " + x);
+    }
+
+    public static void main(String[] args) {
+        Integer a = 15;       
+        int b = 20;    
+
+        show(a); 
+        show(b); 
+        show(b + a);
+    }
+}
+
+
+`
+            },
+            {
+                question: "Varargs in Overloading\n\nNumber of changes to do : 3",
+                buggyCode: `class VarargsOverloading {
+    void display(long a) { System.out.println("int method"); }
+    void display(int... a) { System.out.println("varags method"); }
+
+    public static void main(String[] args) {
+        VarargsOverloading obj = new VarargsOverloading();
+        obj.display(5);
+        obj.display();
+        obj.display((short) 5.5);
+        obj.display((char) 5);
+    }
+}
+
+`,
+                correctCode: `class VarargsOverloading {
+    void display(int a) { System.out.println("int method"); }
+    void display(int... a) { System.out.println("varargs method"); }
+
+    public static void main(String[] args) {
+        VarargsOverloading obj = new VarargsOverloading();
+        obj.display(5);
+        obj.display();
+        obj.display((int) 5.5);
+        obj.display((byte) 5);
+    }
+}
+` },
+{
+                question: "Main Method Can Be Overloaded\n\nNumber of changes to do : 3",
+                buggyCode: `class MainOverloading {
+    public static void main(String args) { 
+        System.out.println("Main with String"); 
+        main(10); 
+    }
+    public void main(int args) { 
+        System.out.println("Main with int"); 
+        main();
+    }
+}
+
+`,
+                correctCode: `class MainOverloading {
+    public static void main(String[] args) { 
+        System.out.println("Main with String[]");
+        main(10); 
+    }
+    
+    public static void main(int args) { 
+        System.out.println("Main with int"); 
+        main();
+    }
+    
+}
+
+` }
+
+        ];
+
+        let currentQuestion = 0;
+        document.getElementById("question").innerText = questions[currentQuestion].question;
+        document.getElementById("codeArea").value = questions[currentQuestion].buggyCode;
+
+        function normalizeCode(code) {
+    return code
+        .replace(/\s+/g, ' ')  // Replace multiple spaces, tabs, and newlines with a single space
+        .replace(/\s*{\s*/g, " { ")  // Ensure space before and after `{`
+        .replace(/\s*}\s*/g, " } ")  // Ensure space before and after `}`
+        .trim();  // Remove leading/trailing spaces
+}
+
+function checkAnswer() {
+    let userCode = normalizeCode(document.getElementById("codeArea").value);
+    let correctCode = normalizeCode(questions[currentQuestion].correctCode);
+
+    let message = document.getElementById("message");
+    let nextButton = document.querySelector(".next");
+
+    console.log("User Code:", userCode);
+    console.log("Correct Code:", correctCode);
+
+    if (userCode === correctCode) {
+        message.innerText = "Great job! You fixed the bug! ✅";
+        message.className = "message correct";
+        nextButton.style.display = "inline-block";
+    } else {
+        message.innerText = "Oops! Try again. ❌";
+        message.className = "message wrong";
+    }
+}
+
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                document.getElementById("question").innerText = questions[currentQuestion].question;
+                document.getElementById("codeArea").value = questions[currentQuestion].buggyCode;
+                document.getElementById("message").innerText = "";
+                document.querySelector(".next").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

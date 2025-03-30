@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1</title>
+    <style>
+        .site-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .card-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .card {
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 500px;
+  }
+ 
+  
+/* From Uiverse.io by Z4drus */ 
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .button-3d {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    border-width: 0;
+    padding: 0 8px;
+    min-width: 4em;
+    min-height: 4em;
+    box-sizing: border-box;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 20px;
+  }
+  
+  .button-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    padding: 8px 16px;
+    transform: translateY(0);
+    color: #fff;
+    background-image: linear-gradient(145deg, #6a11cb, #2575fc);
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    transition: transform 0.3s, border-radius 0.3s, background 10s;
+  }
+  
+  .button-3d:active .button-top {
+    border-radius: 10px 10px 8px 8px / 8px;
+    transform: translateY(2px);
+    background-image: linear-gradient(145deg, #2575fc, #6a11cb);
+  }
+  
+  .button-bottom {
+    position: absolute;
+    z-index: 1;
+    bottom: 4px;
+    left: 4px;
+    border-radius: 20px;
+    padding-top: 6px;
+    width: calc(100% - 8px);
+    height: calc(100% - 10px);
+    background-image: linear-gradient(145deg, #2575fc, #6a11cb);
+    box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.5);
+    transition: border-radius 0.2s, padding-top 0.2s;
+  }
+  
+  .button-base {
+    position: absolute;
+    z-index: 0;
+    top: 4px;
+    left: 0;
+    border-radius: 20px;
+    width: 100%;
+    height: calc(100% - 4px);
+    background-color: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 1px 0 rgba(255, 255, 255, 0.75),
+      inset 0 2px 2px rgba(0, 0, 0, 0.25);
+    transition: border-radius 0.2s, padding-top 0.2s;
+  }
+  
+  .button-3d:active .button-bottom {
+    border-radius: 10px 10px 8px 8px / 8px;
+    padding-top: 0;
+  }
+  
+  .button-3d:active .button-base {
+    border-radius: 10px 10px 8px 8px / 8px;
+  }
+  
+
+.checkbox-wrapper-41 {
+    --size: 100px;
+  }
+  
+  .checkbox-wrapper-41 input[type="checkbox"] {
+    -webkit-appearance: none;
+    width: var(--size);
+    height: calc(var(--size) / 2);
+    background-color: #fff;
+    border: 3px solid #222;
+    border-radius: 30px 100px 100px 100px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.5s;
+    margin-right: 1300px;
+  }
+  
+  .checkbox-wrapper-41 input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    width: calc(var(--size) / 2);
+    height: calc(var(--size) / 2);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scale(0.7);
+    border: 3px solid #222;
+    border-radius: 30px 100px 100px 100px;
+    background-color: #fde881;
+    box-sizing: border-box;
+    transition: all 0.5s;
+  }
+  
+  .checkbox-wrapper-41 input[type="checkbox"]:checked {
+    background-color: #fde881;
+    border-radius: 100px 100px 30px 100px;
+  }
+  
+  .checkbox-wrapper-41 input[type="checkbox"]:checked::before {
+    left: 50%;
+    background-color: #fff;
+    border-radius: 100px 100px 30px 100px;
+  }
+
+
+
+/* card styles */
+:root {
+    font-size: 125%;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+body {
+    font: 1em/1.618 Inter, sans-serif;
+    margin: 0;
+    color: #224;
+    background: url("image.png") center / cover no-repeat fixed;
+}
+.site-container {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 1.5em;
+}
+.card {
+    max-width: 500px;
+    height: auto;
+    padding: 35px;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+pre {
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+.navigation {
+    text-align: center;
+    margin-top: 1em;
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #4a90e2;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button:hover {
+    background-color: #357ab7;
+}
+.finish-button {
+            position:relative;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .finish-button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="site-container">
+        <div class="checkbox-wrapper-41">
+            <label>
+                <input type="checkbox" id="toggle-concept">
+                <span id="concept-label">Overloading Concepts</span>
+            </label>
+        </div>
+
+        <div class="card-container">
+            <div class="button-container" onclick="previousConcept()">
+                <button class="button-3d">
+                    <div class="button-top">❮</div>
+                    <div class="button-bottom"></div>
+                </button>
+            </div>
+
+            <div class="card" id="concept-card">
+                <h2 id="concept-title"></h2>
+                <p id="concept-description"></p>
+                <pre><code id="concept-code"></code></pre>
+                <pre><code id="concept-output"></code></pre>
+            </div>
+
+            <div class="button-container" onclick="nextConcept()">
+                <button class="button-3d">
+                    <div class="button-top">❯</div>
+                    <div class="button-bottom"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button class="finish-button" onclick="window.location.href='Part2.html'">Finish</button>
+    <script>
+        const overloadingConcepts = [
+        {
+            title: "Method Overloading Based on Parameter Count",
+            description: "Methods with the same name but different parameter counts.",
+            code: `class MathOperation {
+    int add(int a, int b) { return a + b; }
+    int add(int a, int b, int c) { return a + b + c; }
+}
+`,
+            output: "Output:\nadd(2, 3) = 5\nadd(2, 3, 4) = 9"
+        },
+        {
+            title: "Method Overloading Based on Parameter Type",
+            description: "Methods with the same name but different parameter types.",
+            code: `class Display {
+    void show(int a) { System.out.println("Integer: " + a); }
+    void show(String a) { System.out.println("String: " + a); }
+}
+`,
+            output: "Output:\nInteger: 10\nString: Hello"
+        },
+        {
+            title: "Automatic Type Promotion",
+            description: "Smaller data types are promoted to larger data types if no exact match is found.",
+            code: `class Demo {
+    void display(int a) { System.out.println("Integer: " + a); }
+    void display(double a) { System.out.println("Double: " + a); }
+}
+`,
+            output: "Output:\ndisplay(5) -> Integer: 5\ndisplay(5.5) -> Double: 5.5"
+        },
+        {
+            title: "Return Type Does Not Affect Overloading",
+            description: "Method overloading depends only on method signature (name and parameter list).",
+            code: `class Example {
+    void print(int a) {}
+    int print(int a, int b) { return a + b; }
+}
+`,
+            output: "Output: Compiles Successfully"
+        },
+        {
+            title: "Type Promotion in Overloading",
+            description: "Type promotion may occur when the exact match is not found.",
+            code: `class Overload {
+    void test(int a) { System.out.println("Int: " + a); }
+    void test(double a) { System.out.println("Double: " + a); }
+}
+`,
+            output: "Output: Int: 5 or Double: 5.0"
+        },
+        {
+            title: "Ambiguity in Overloading",
+            description: "If two methods match equally well, ambiguity error occurs.",
+            code: `class Overload {
+    void test(int a, double b) {}
+    void test(double a, int b) {}
+}
+`,
+            output: "Output: Compilation Error"
+        },
+        {
+            title: "Overloading with varargs",
+            description: "Methods with a variable number of arguments can be overloaded.",
+            code: `class Overload {
+    void display(int... numbers) {}
+    void display(String... texts) {}
+}
+`,
+            output: "Output: Successfully Compiled"
+        },
+        {
+            title: "Overloading with Type Promotion and varargs",
+            description: "Type promotion can cause ambiguity when combined with varargs.",
+            code: `class Overload {
+    void test(int a, double b) {}
+    void test(double... a) {}
+}
+`,
+            output: "Output: Compilation Error"
+        },
+        {
+            title: "Static Method Overloading",
+            description: "Static methods can be overloaded.",
+            code: `class Overload {
+    static void display(int a) {}
+    static void display(String a) {}
+}
+`,
+            output: "Output: Successfully Compiled"
+        },
+        {
+            title: "Method Overloading and Inheritance",
+            description: "Overloading works across inheritance but is resolved at compile-time.",
+            code: `class A {
+    void show(int a) { System.out.println(a); }
+}
+class B extends A {
+    void show(double a) { System.out.println(a); }
+}
+`,
+            output: "Output: 10 or 10.5 depending on method signature"
+        }
+    ];
+
+        const overridingConcepts =[
+  {
+    title: "Basic Method Overriding",
+    description: "A subclass provides a specific implementation for a method already defined in its superclass.",
+    code: `class Animal {
+    void speak() { System.out.println("Animal is speaking"); }
+}
+
+class Dog extends Animal {
+    @Override
+    void speak() { System.out.println("Dog is barking"); }
+}
+`,
+    output: "Output:\nDog is barking"
+  },
+  {
+    title: "Overriding vs Overloading",
+    description: "Overriding occurs at runtime, whereas overloading is resolved at compile-time.",
+    code: `class Parent {
+    void display() { System.out.println("Parent display"); }
+    void display(int x) { System.out.println("Overloaded display: " + x); }
+}
+
+class Child extends Parent {
+    @Override
+    void display() { System.out.println("Child display"); }
+}
+`,
+    output: "Output:\nChild display\nOverloaded display: 10"
+  },
+  {
+    title: "Super Keyword Usage",
+    description: "The super keyword allows calling the overridden method from the superclass.",
+    code: `class Parent {
+    void show() { System.out.println("Parent's show()"); }
+}
+
+class Child extends Parent {
+    @Override
+    void show() {
+        super.show();
+        System.out.println("Child's show()");
+    }
+}
+`,
+    output: "Output:\nParent's show()\nChild's show()"
+  },
+  {
+    title: "Return Type Covariance",
+    description: "Overriding allows different return types if the return type is a subtype of the overridden method's return type.",
+    code: `class Parent {
+    Parent getObject() { return this; }
+}
+
+class Child extends Parent {
+    @Override
+    Child getObject() { return this; }
+}
+`,
+    output: "Output:\nChild"
+  },
+  {
+    title: "Access Modifier Restrictions",
+    description: "The overriding method cannot have a more restrictive access modifier than the overridden method.",
+    code: `class Parent {
+    protected void display() { System.out.println("Parent display"); }
+}
+
+class Child extends Parent {
+    @Override
+    public void display() { System.out.println("Child display"); }
+}
+`,
+    output: "Output:\nChild display"
+  },
+  {
+    title: "Static Methods Are Not Overridden",
+    description: "Static methods are hidden, not overridden. They are resolved at compile-time.",
+    code: `class Parent {
+    static void print() { System.out.println("Parent static print"); }
+}
+
+class Child extends Parent {
+    static void print() { System.out.println("Child static print"); }
+}
+`,
+    output: "Output:\nParent static print"
+  },
+  {
+    title: "Final Methods Cannot Be Overridden",
+    description: "A method declared as final cannot be overridden by subclasses.",
+    code: `class Parent {
+    final void display() { System.out.println("Parent display"); }
+}
+
+class Child extends Parent {
+    // Error: Cannot override final method
+    // void display() { System.out.println("Child display"); }
+}
+`,
+    output: "Output:\nParent display"
+  },
+  {
+    title: "Private Methods Are Not Overridden",
+    description: "Private methods are not visible to subclasses, so they cannot be overridden.",
+    code: `class Parent {
+    private void show() { System.out.println("Parent show()"); }
+}
+
+class Child extends Parent {
+    void show() { System.out.println("Child show()"); }
+}
+`,
+    output: "Output:\nCompile-time error if trying to access show() from Parent reference"
+  },
+  {
+    title: "Abstract Method Overriding",
+    description: "Abstract methods must be overridden by concrete subclasses.",
+    code: `abstract class Animal {
+    abstract void sound();
+}
+
+class Dog extends Animal {
+    @Override
+    void sound() { System.out.println("Bark"); }
+}
+`,
+    output: "Output:\nBark"
+  },
+  {
+    title: "Polymorphism in Overriding",
+    description: "Overridden methods exhibit polymorphic behavior when accessed via superclass reference.",
+    code: `class Shape {
+    void draw() { System.out.println("Drawing Shape"); }
+}
+
+class Circle extends Shape {
+    @Override
+    void draw() { System.out.println("Drawing Circle"); }
+}
+
+class Rectangle extends Shape {
+    @Override
+    void draw() { System.out.println("Drawing Rectangle"); }
+}
+`,
+    output: "Output:\nDrawing Circle\nDrawing Rectangle"
+  }
+];
+
+        let currentConceptIndex = 0;
+        let isOverriding = false;
+
+        const concepts = () => isOverriding ? overridingConcepts : overloadingConcepts;
+
+        function renderConcept() {
+            const concept = concepts()[currentConceptIndex];
+            document.getElementById("concept-title").textContent = concept.title;
+            document.getElementById("concept-description").textContent = concept.description;
+            document.getElementById("concept-code").textContent = concept.code;
+            document.getElementById("concept-output").textContent = concept.output;
+        }
+
+        function nextConcept() {
+            currentConceptIndex = (currentConceptIndex + 1) % concepts().length;
+            renderConcept();
+        }
+
+        function previousConcept() {
+            currentConceptIndex = (currentConceptIndex - 1 + concepts().length) % concepts().length;
+            renderConcept();
+        }
+
+        document.getElementById("toggle-concept").addEventListener("change", (e) => {
+            isOverriding = e.target.checked;
+            currentConceptIndex = 0;
+            document.getElementById("concept-label").textContent = isOverriding ? 'Overriding Concepts' : 'Overloading Concepts';
+            renderConcept();
+        });
+
+        renderConcept();
+    </script>
+</body>
+</html>

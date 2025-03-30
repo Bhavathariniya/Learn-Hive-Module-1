@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Time!!!</title>
+</head>
+<body>
+    <style>
+        /* 🌑 Dark Theme */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* 📦 Quiz Container */
+.quiz-container {
+    width: 50%;
+    margin: 50px auto;
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.5);
+}
+
+/* 📝 Question */
+h1 {
+    font-size: 26px;
+    color: #00e1ff;
+}
+
+.question-box {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+/* 🟩 Answer Box */
+.answer-box {
+    width: 60%;
+    margin: 20px auto;
+    padding: 10px;
+    border: 2px dashed #00e1ff;
+    min-height: 40px;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+    background: rgba(0, 255, 255, 0.1);
+    color: #00e1ff;
+}
+
+/* 🔘 Options Styling */
+.options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.option {
+    background: #00e1ff;
+    color: #121212;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0px 4px 10px rgba(0, 255, 255, 0.3);
+}
+
+.option:hover {
+    background: #009fbf;
+    box-shadow: 0px 4px 15px rgba(0, 255, 255, 0.7);
+}
+
+/* 🎛️ Buttons */
+/* Center Buttons in a Row */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+/* General Button Styling */
+button {
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+}
+
+
+/* ✅ Next & Previous Buttons */
+#prev-question, #next-question {
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 140px;
+    text-align: center;
+    transition: 0.3s;
+    border: none;
+}
+
+/* ⬅ Previous Button */
+#prev-question {
+    background: #e74c3c;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(231, 76, 60, 0.5);
+    display: none;
+}
+
+#prev-question:hover {
+    background: #c0392b;
+    box-shadow: 0px 4px 15px rgba(231, 76, 60, 0.9);
+}
+
+
+#check-answer {
+    background: #2ecc71;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(46, 204, 113, 0.5);
+}
+
+#check-answer:hover {
+    background: #27ae60;
+    box-shadow: 0px 4px 15px rgba(46, 204, 113, 0.9);
+}
+
+/* Next Button */
+#next-question {
+    background: #e67e22;
+    color: white;
+    box-shadow: 0px 4px 10px rgba(243, 156, 18, 0.5);
+    display: none;
+}
+
+#next-question:hover {
+    background: #d35400;
+    box-shadow: 0px 4px 15px rgba(243, 156, 18, 0.9);
+}
+
+/* 🏆 Score Box */
+#score-box {
+    width: 60%;
+    margin: 10px auto;
+    padding: 12px;
+    border: 2px dashed #2ecc71;
+    min-height: 40px;
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.1);
+}
+
+/* 🔥 Result Text */
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* 📌 Clue */
+#clue {
+    margin-top: 10px;
+    font-style: italic;
+    display: none;
+    color: #f1c40f;
+}
+
+
+/* 📊 Summary Container */
+.summary-container {
+    width: 50%;
+    margin: 50px auto;
+    background: #1e1e1e;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.5);
+    text-align: center;
+}
+
+.summary-container h1 {
+    color: #00e1ff;
+}
+
+.summary-container p {
+    font-size: 20px;
+    color: #ffffff;
+}
+
+/* 🔄 Restart Button */
+#restart-quiz {
+    background: #3498db;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.5);
+}
+
+#restart-quiz:hover {
+    background: #2980b9;
+    box-shadow: 0px 4px 15px rgba(52, 152, 219, 0.9);
+}
+.finish-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(52, 152, 219, 0.5);
+}
+
+.finish-button:hover {
+    background: #2980b9;
+    box-shadow: 0px 4px 15px rgba(52, 152, 219, 0.9);
+}
+
+    </style>
+    <div class="quiz-container">
+        <h1>Its's Quiz Time!!!</h1>
+        <p class="question-box" id="question"></p>
+        
+        <div class="options"></div>
+        
+        <p class="answer-box">Selected Answer: <span id="selected-answer">None</span></p>
+        
+        <p id="clue"></p>
+        
+        <div class="button-container">
+            <button id="prev-question">⬅ Previous</button>
+            <button id="check-answer">Check Answer ✅</button>
+            <button id="next-question">Next ➡</button>
+        </div>
+
+        <p id="result"></p>
+        <p id="score-box">Score: <span id="score">0</span></p>
+    </div>
+
+    <!-- Final Summary Page (Hidden Initially) -->
+<div class="summary-container" style="display: none;">
+    <h1>Quiz Summary</h1>
+    <p><strong>Final Score:</strong> <span id="final-score"></span> / <span id="total-score"></span></p>
+    <p><strong>Time Taken:</strong> <span id="time-taken"></span> seconds</p>
+    <p><strong>Accuracy:</strong> <span id="accuracy"></span></p>
+    <div class="button-container">
+        <button id="restart-quiz">Restart Quiz</button>
+        <button class="finish-button" onclick="window.location.href='Part3.html'">Finish</button>
+    </div>
+    
+</div>
+
+
+
+
+
+    <script>
+        const questions = [
+    {
+        question: "I execute without needing an instance. What am I?",
+        correctAnswer: "Static Method",
+        options: ["Constructor", "Static Method", "Interface", "Abstract Class", "Lambda Expression"]
+    },
+    {
+        question: "I am inaccessible outside my scope but can be overloaded. What am I?",
+        correctAnswer: "Private Method",
+        options: ["Static Method", "Public Variable", "Private Method", "Interface Method", "Protected Constructor"]
+    },
+    {
+        question: "I allow multiple implementations with the same name but different parameters. What am I?",
+        correctAnswer: "Overloading",
+        options: ["Method Hiding", "Overloading", "Overriding", "Abstract Method", "Encapsulation"]
+    },
+    {
+        question: "Once assigned, I can never change, yet I allow overloading. What am I?",
+        correctAnswer: "Final Method",
+        options: ["Constant", "Static Variable", "Immutable Object", "Final Method", "Interface"]
+    },
+    {
+        question: "I convert smaller types into larger types automatically. What am I?",
+        correctAnswer: "Type Promotion",
+        options: ["Type Casting", "Autoboxing", "Type Promotion", "Implicit Conversion", "Generics"]
+    },
+    {
+        question: "When multiple possibilities exist, I select the most specific one. What am I?",
+        correctAnswer: "Type Casting",
+        options: ["Method Overloading", "Type Casting", "Abstract Class", "Reflection API", "Type Erasure"]
+    },
+    {
+        question: "I prioritize primitive types over wrapper classes when resolving method calls. What am I?",
+        correctAnswer: "Autoboxing",
+        options: ["Type Promotion", "Method Overriding", "Implicit Casting", "Autoboxing", "Reflection"]
+    },
+    {
+        question: "I define how objects are instantiated and initialized. What am I?",
+        correctAnswer: "Constructor",
+        options: ["Static Block", "Constructor", "Factory Method", "Abstract Class", "Lambda Expression"]
+    },
+    {
+        question: "I allow multiple arguments, but only if necessary. What am I?",
+        correctAnswer: "Varargs",
+        options: ["Arrays", "Varargs", "Overloading", "List Collection", "Method Chaining"]
+    },
+    {
+        question: "I exist in multiple versions but only one executes at runtime. What am I?",
+        correctAnswer: "Main Method",
+        options: ["Constructor", "Static Block", "Main Method", "Lambda Function", "Abstract Method"]
+    }
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+let correctAnswers = 0;
+let selectedAnswers = Array(questions.length).fill(null);
+let startTime = Date.now();
+
+const questionEl = document.getElementById("question");
+const optionsContainer = document.querySelector(".options");
+const answerBox = document.getElementById("selected-answer");
+const checkButton = document.getElementById("check-answer");
+const nextButton = document.getElementById("next-question");
+const prevButton = document.getElementById("prev-question");
+const resultEl = document.getElementById("result");
+const scoreEl = document.getElementById("score");
+
+function loadQuestion() {
+    const q = questions[currentQuestionIndex];
+    questionEl.textContent = q.question;
+    optionsContainer.innerHTML = "";
+    answerBox.textContent = selectedAnswers[currentQuestionIndex] || "None";
+    resultEl.innerHTML = "";
+    nextButton.style.display = "none";
+    checkButton.disabled = false;
+
+    q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.classList.add("option");
+        btn.textContent = option;
+        btn.onclick = () => {
+            selectedAnswers[currentQuestionIndex] = option;
+            answerBox.textContent = option;
+        };
+        optionsContainer.appendChild(btn);
+    });
+
+    prevButton.style.display = currentQuestionIndex > 0 ? "block" : "none";
+}
+
+checkButton.onclick = () => {
+    const selectedAnswer = selectedAnswers[currentQuestionIndex];
+
+    if (!selectedAnswer) {
+        resultEl.innerHTML = `<span style="color: yellow;">⚠️ Please select an answer!</span>`;
+        return;
+    }
+
+    const correctAnswer = questions[currentQuestionIndex].correctAnswer;
+
+    if (selectedAnswer === correctAnswer) {
+        resultEl.innerHTML = `<span style="color: green;">✅ Correct!</span>`;
+        if (!selectedAnswers[currentQuestionIndex].includes("✓")) {
+            score += 10;
+            correctAnswers++;
+        }
+    } else {
+        resultEl.innerHTML = `<span style="color: red;">❌ Wrong!</span> <br> ✅ Correct Answer: <b style="color: green;">${correctAnswer}</b>`;
+    }
+
+    scoreEl.textContent = score;
+    checkButton.disabled = true;
+    nextButton.style.display = "block";
+};
+
+nextButton.onclick = () => {
+    if (currentQuestionIndex === questions.length - 1) {
+        showSummary();
+        return;
+    }
+    
+    currentQuestionIndex++;
+    loadQuestion();
+};
+
+prevButton.onclick = () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+    }
+};
+
+function showSummary() {
+    let endTime = Date.now();
+    let timeTaken = ((endTime - startTime) / 1000).toFixed(2); // Convert ms to seconds
+
+    document.querySelector(".quiz-container").style.display = "none";
+    document.querySelector(".summary-container").style.display = "block";
+
+    document.getElementById("final-score").textContent = score;
+    document.getElementById("total-score").textContent = questions.length * 10;
+    document.getElementById("time-taken").textContent = timeTaken;
+    document.getElementById("accuracy").textContent = ((correctAnswers / questions.length) * 100).toFixed(2) + "%";
+}
+
+document.getElementById("restart-quiz").onclick = () => window.location.reload();
+
+loadQuestion();
+
+    </script>
+</body>
+</html>
